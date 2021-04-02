@@ -32,25 +32,19 @@
 			</el-form-item>
 
 			<el-form-item>
-				<el-button type="primary" round @click="onSubmit('loginForm')" style="width: 250px;">登录</el-button>
+				<el-button type="primary" round @click="onSubmit('loginForm')" style="width: 250px;" :plain="true">登录
+				</el-button>
 			</el-form-item>
 			<el-tag type="danger">忘记密码，请联系管理员：10086</el-tag>
 
 		</el-form>
-
-		<el-dialog title="温馨提示" :visible.sync="dialogVisible" width="25%">
-			<span>该用户不存在或者密码输入错误</span>
-			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-			</span>
-		</el-dialog>
 	</div>
 
 </template>
 
 <script>
 	import axios from 'axios';
-	
+
 	import SIdentify from './verification.vue'
 
 
@@ -83,6 +77,8 @@
 				if (value === '') {
 					callback(new Error('请输入验证码'))
 				} else if (value !== identifyCode) {
+					this.identifyCode = ''
+					this.makeCode(this.identifyCodes, 4)
 					callback(new Error('验证码不正确!'))
 				} else {
 					callback()
@@ -97,7 +93,7 @@
 					password: '',
 					verifycode: '',
 					type: '',
-					keywords: '*&^&*%^&%^&$%^'
+					
 				},
 
 				// 表单验证，需要在 el-form-item 元素中增加 prop 属性
@@ -124,9 +120,6 @@
 					}]
 				},
 
-				// 对话框显示和隐藏
-				dialogVisible: false
-
 			}
 		},
 		components: {
@@ -139,6 +132,13 @@
 		},
 		methods: {
 
+			loginFailed() {
+				this.$message.error('用户名或密码输入错误!');
+				this.identifyCode = ''
+				this.makeCode(this.identifyCodes, 4)
+				this.form.verifycode = ''
+				this.form.password = ''
+			},
 			onSubmit(formName) {
 
 				// 为表单绑定验证功能
@@ -148,19 +148,19 @@
 					if (valid) {
 						// 开始登录验证
 						let that = this
-						axios.get(
-								'http://musicapi.leanapp.cn/search', {
-									params: {
-										keywords: this.form.keywords
-									}
-									// password: this.form.password
+						axios.post(
+								'http://localhost:8080/api/studentInfos/loginByPrimaryKeyWithPassword', {
+									username: this.form.username,
+									password: this.form.password
 								})
 							.then(function(response) {
 								// 前后端一个约定。如何如何，是一个规定。如果怎么怎么样，就登陆失败
-								if (response.data.code === '404') {
-									that.dialogVisible = true
+								if (response.data === '') {
+
+									// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了
+									that.loginFailed()
+									
 								} else {
-									console.log(response)
 									var userInfo = response.data.data;
 									that.$store.commit('$_setToken', userInfo);
 									that.$router.push('/main')
@@ -170,6 +170,7 @@
 								console.log(error);
 							});
 					}
+
 				});
 			},
 			// 生成随机数
