@@ -1,0 +1,23 @@
+{
+  "id": "2441911",
+  "name": "divinechoice",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "720794",
+      "name": "验证码 ",
+      "font_class": "yanzhengma2",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "17371121",
+      "name": "用户类型",
+      "font_class": "yonghuleixing",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
