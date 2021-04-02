@@ -1,4 +1,4 @@
-<template>
+<template id="login">
 
 	<div class="backgroun-img">
 		<el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box" status-icon>
@@ -31,12 +31,10 @@
 				</div>
 			</el-form-item>
 
-
-			<el-form-item style="margin: 20px;">
-				<el-button type="primary" round @click="onSubmit('loginForm')">登录</el-button>
-				&emsp;&emsp;
-				<el-button type="warning" round @click="registerForm('loginForm')">注册</el-button>
+			<el-form-item>
+				<el-button type="primary" round @click="onSubmit('loginForm')" style="width: 250px;">登录</el-button>
 			</el-form-item>
+			<el-tag type="danger">忘记密码，请联系管理员：10086</el-tag>
 
 		</el-form>
 
@@ -80,11 +78,11 @@
 			};
 			// 验证码自定义验证规则
 			var validateVerifycode = (rule, value, callback) => {
-				this.identifyCode = this.identifyCode.toLowerCase()
-				value = value.toLowerCase()
+				var identifyCode = this.identifyCode.toLowerCase()
+				var value = value.toLowerCase()
 				if (value === '') {
 					callback(new Error('请输入验证码'))
-				} else if (value !== this.identifyCode) {
+				} else if (value !== identifyCode) {
 					callback(new Error('验证码不正确!'))
 				} else {
 					callback()
@@ -173,12 +171,6 @@
 							});
 					}
 				});
-			},
-			registerForm(formName) {
-				console.log(this.$refs[formName])
-				this.$refs[formName].validate((valid) => {
-					console.log(valid)
-				})
 			},
 			// 生成随机数
 			randomNum(min, max) {
