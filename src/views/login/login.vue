@@ -93,7 +93,7 @@
 					password: '',
 					verifycode: '',
 					type: '',
-					
+
 				},
 
 				// 表单验证，需要在 el-form-item 元素中增加 prop 属性
@@ -131,7 +131,43 @@
 			this.makeCode(this.identifyCodes, 4)
 		},
 		methods: {
+			peoplePass(url) {
+				// 开始登录验证
+				let that = this
+				axios.post(url, {
+						username: this.form.username,
+						password: this.form.password
+					})
+					.then(function(response) {
+						console.log(response)
+						// 前后端一个约定。如何如何，是一个规定。如果怎么怎么样，就登陆失败
+						if (response.data === '') {
 
+							// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了
+							that.loginFailed()
+
+						} else {
+							// 解决方法：转换为json格式进行存取
+							// 通过 接口url进入不同的界面
+							if (url.indexOf('student') != -1) {
+								that.$store.commit('$_setUserType', JSON.stringify('/student'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/student')
+							} else if(url.indexOf('teacher') != -1){
+								that.$store.commit('$_setUserType', JSON.stringify('/teacher'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/teacher')
+							} else if(url.indexOf('leader') != -1){
+								that.$store.commit('$_setUserType', JSON.stringify('/leader'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/leader')
+							}
+						}
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
 			loginFailed() {
 				this.$message.error('用户名或密码输入错误!');
 				this.identifyCode = ''
@@ -146,29 +182,16 @@
 
 					// 当用户，没有按照规则填写登录信息，就会是false
 					if (valid) {
-						// 开始登录验证
-						let that = this
-						axios.post(
-								'http://localhost:8080/api/studentInfos/loginByPrimaryKeyWithPassword', {
-									username: this.form.username,
-									password: this.form.password
-								})
-							.then(function(response) {
-								// 前后端一个约定。如何如何，是一个规定。如果怎么怎么样，就登陆失败
-								if (response.data === '') {
-
-									// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了
-									that.loginFailed()
-									
-								} else {
-									var userInfo = response.data.data;
-									that.$store.commit('$_setToken', userInfo);
-									that.$router.push('/main')
-								}
-							})
-							.catch(function(error) {
-								console.log(error);
-							});
+						if (this.form.type === 'student') {
+							this.peoplePass(
+								'http://localhost:8080/api/studentInfos/loginByPrimaryKeyWithPassword');
+						} else if (this.form.type === 'teacher') {
+							this.peoplePass(
+								'http://localhost:8080/api/teacherInfos/loginByPrimaryKeyWithPassword');
+						} else {
+							this.peoplePass(
+								'http://localhost:8080/api/leaderInfos/loginByPrimaryKeyWithPassword');
+						}
 					}
 
 				});

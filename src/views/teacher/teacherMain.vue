@@ -7,7 +7,7 @@
 
 <script>
 	export default {
-		name: "Main",
+		name: "StudentMain",
 		methods: {
 			a() {
 				this.$store.commit('$_removeStorage', window.localStorage.token);
