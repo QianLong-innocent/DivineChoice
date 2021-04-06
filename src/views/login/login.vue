@@ -139,7 +139,7 @@
 						password: this.form.password
 					})
 					.then(function(response) {
-
+						
 						// 解决方法：转换为json格式进行存取
 						// 通过 接口url进入不同的界面
 						if (url.indexOf('student') != -1) {
@@ -158,6 +158,7 @@
 
 					})
 					.catch(function(error) {
+						
 						// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了。这里会返回404
 						that.loginFailed()
 						

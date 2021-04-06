@@ -1,8 +1,4 @@
 <template>
-</template>
-
-<script>
-</script><template>
 	<div>
 		首页
 		<button @click="a()">退出登陆</button>
