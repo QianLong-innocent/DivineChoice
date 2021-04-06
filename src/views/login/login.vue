@@ -139,33 +139,28 @@
 						password: this.form.password
 					})
 					.then(function(response) {
-						console.log(response)
-						// 前后端一个约定。如何如何，是一个规定。如果怎么怎么样，就登陆失败
-						if (response.data === '') {
 
-							// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了
-							that.loginFailed()
-
-						} else {
-							// 解决方法：转换为json格式进行存取
-							// 通过 接口url进入不同的界面
-							if (url.indexOf('student') != -1) {
-								that.$store.commit('$_setUserType', JSON.stringify('/student'))
-								that.$store.commit('$_setToken', JSON.stringify(response.data));
-								that.$router.push('/student')
-							} else if(url.indexOf('teacher') != -1){
-								that.$store.commit('$_setUserType', JSON.stringify('/teacher'))
-								that.$store.commit('$_setToken', JSON.stringify(response.data));
-								that.$router.push('/teacher')
-							} else if(url.indexOf('leader') != -1){
-								that.$store.commit('$_setUserType', JSON.stringify('/leader'))
-								that.$store.commit('$_setToken', JSON.stringify(response.data));
-								that.$router.push('/leader')
-							}
+						// 解决方法：转换为json格式进行存取
+						// 通过 接口url进入不同的界面
+						if (url.indexOf('student') != -1) {
+							that.$store.commit('$_setUserType', JSON.stringify('/student'))
+							that.$store.commit('$_setToken', JSON.stringify(response.data));
+							that.$router.push('/student')
+						} else if (url.indexOf('teacher') != -1) {
+							that.$store.commit('$_setUserType', JSON.stringify('/teacher'))
+							that.$store.commit('$_setToken', JSON.stringify(response.data));
+							that.$router.push('/teacher')
+						} else if (url.indexOf('leader') != -1) {
+							that.$store.commit('$_setUserType', JSON.stringify('/leader'))
+							that.$store.commit('$_setToken', JSON.stringify(response.data));
+							that.$router.push('/leader')
 						}
+
 					})
 					.catch(function(error) {
-						console.log(error);
+						// 编写登陆失败以及反馈信息给用户，明白自己哪里错误了。这里会返回404
+						that.loginFailed()
+						
 					});
 			},
 			loginFailed() {
@@ -222,8 +217,6 @@
 <style lang="scss" scoped>
 	.backgroun-img {
 		background: url("../../assets/images/background-login.jpg");
-		margin-top: -10px;
-		margin-left: -9px;
 		background-size: 100% 100%;
 		height: 100%;
 		width: 100%;
