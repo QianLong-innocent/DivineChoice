@@ -1,16 +1,17 @@
-<template id="student">
+<template id="studentMain">
 
 	<el-container style="height: 754px; border: 1px solid #eee">
 		<!-- 左侧导航栏 -->
 		<studentAside></studentAside>
-	
-		
+
+
 		<el-container>
 			<!-- 面包屑导航 + 用户个人中心 + 退出登录 -->
 			<studentHeader></studentHeader>
+
 			<!-- 这里必须改成组件控制 -->
 			<el-main style="padding: 0px;overflow: hidden;">
-				
+
 				<router-view></router-view>
 
 			</el-main>
@@ -44,7 +45,14 @@
 		components: {
 			StudentAside,
 			StudentHeader
+		},
+		// 刷新页面，就自动跳转到首页
+		created() {
+
+			this.$router.replace('/student')
+
 		}
+
 
 	}
 </script>

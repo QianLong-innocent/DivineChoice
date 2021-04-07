@@ -5,6 +5,9 @@ import Router from 'vue-router'
 import store from '../store/store.js'
 import StudentMain from '../views/student/studentMain.vue'
 import Home from '../views/student/index/home.vue'
+import ChoiceTypeOne from '../views/student/choice/choiceTypeOne.vue'
+import ChoiceTypeTwo from '../views/student/choice/choiceTypeTwo.vue'
+
 
 import TeacherMain from '../views/teacher/teacherMain.vue'
 import LeaderMain from '../views/leader/leaderMain.vue'
@@ -15,6 +18,7 @@ import Login from '../views/login/login.vue'
 
 
 Vue.use(Router);
+
 
 const router = new VueRouter({
 	mode: 'history',
@@ -32,17 +36,35 @@ const router = new VueRouter({
 		// 学生首页
 		path: '/student',
 		name: 'StudentMain',
+		meta: {
+			requireAuth: true
+		},
 		component: StudentMain,
-		redirect:Home,
+		redirect: Home,
 		children: [{
 			path: '/student/home',
 			name: 'Home',
+			meta: {
+				chineseName: '首页'
+			},
 			component: Home
-		}],
-		meta: {
-			requireAuth: true
-		}
-		
+		}, {
+			path: '/student/choiceTypeOne',
+			name: 'choiceTypeOne',
+			meta: {
+				chineseName: '毕业选题',
+				chineseName1: '按老师选题'
+			},
+			component: ChoiceTypeOne
+		}, {
+			path: '/student/choiceTypeTwo',
+			name: 'choiceTypeTwo',
+			meta: {
+				chineseName: '毕业选题',
+				chineseName1: '按题型选题'
+			},
+			component: ChoiceTypeTwo
+		}]
 	}, {
 		// 老师首页
 		path: '/teacher',
