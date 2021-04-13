@@ -7,7 +7,8 @@ import StudentMain from '../views/student/studentMain.vue'
 import Home from '../views/student/index/home.vue'
 import ChoiceTypeOne from '../views/student/choice/choiceTypeOne.vue'
 import ChoiceTypeTwo from '../views/student/choice/choiceTypeTwo.vue'
-
+import AlterMessage from '../views/student/alter/alterMessage.vue'
+import AlterPassword from '../views/student/alter/alterPassword.vue'
 
 import TeacherMain from '../views/teacher/teacherMain.vue'
 import LeaderMain from '../views/leader/leaderMain.vue'
@@ -64,6 +65,22 @@ const router = new VueRouter({
 				chineseName1: '按题型选题'
 			},
 			component: ChoiceTypeTwo
+		},{
+			path: '/student/alterMessage',
+			name: 'alterMessage',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改个人信息'
+			},
+			component: AlterMessage
+		},{
+			path: '/student/alterPassword',
+			name: 'alterPassword',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改密码'
+			},
+			component: AlterPassword
 		}]
 	}, {
 		// 老师首页
@@ -88,7 +105,13 @@ export default router;
 
 
 router.beforeEach((to, from, next) => {
-
+	
+	if(to.path === '/login' && store.state.loginUser !== ""){
+		var uri = store.state.loginUser.substr(1, store.state.loginUser.length - 2)
+		next({
+			path: uri
+		})
+	}
 
 	// 遍历当前访问的url。里面的数据，是否为：true。
 	// 是否需要登录
@@ -97,6 +120,7 @@ router.beforeEach((to, from, next) => {
 		// if not, redirect to login page.
 		// 这里面就开始判断，是否有过登录。如果没有登录，那么就重定向到login。反之正常进入
 
+		
 		if (to.matched[0].meta.requireAuth == true) {
 
 			// 如果为true 说明都是必须要进行登陆的

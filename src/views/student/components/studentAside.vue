@@ -1,7 +1,7 @@
 <template id="studentAside">
 	<div class="studentAside">
 		<el-aside style="background-color: rgb(238, 241, 246);width: 230px;">
-			<el-menu default-active="1" @select="handleSelect">
+			<el-menu :default-active=select @select="handleSelect">
 
 				<img src="../../../assets/images/logo.png" height="200px" width="200px" />
 				<router-link to="/student/home">
@@ -21,6 +21,18 @@
 						<el-menu-item index="2-2">&emsp;&emsp;按题型选题</el-menu-item>
 					</router-link>
 				</el-submenu>
+				<el-submenu index="3">
+					<template slot="title"><i class="iconfont iconmy2-act"
+							style="margin-left: 4px;"></i>&emsp;个人中心</template>
+					<router-link to="/student/alterMessage">
+						<el-menu-item index="3-1">&emsp;&emsp;修改个人信息
+						</el-menu-item>
+					</router-link>
+					<router-link to="/student/alterPassword">
+						<el-menu-item index="3-2">&emsp;&emsp;修改密码
+						</el-menu-item>
+					</router-link>
+				</el-submenu>
 
 			</el-menu>
 
@@ -30,8 +42,14 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				select: "1"
+			}
+		},
 		methods: {
 			handleSelect(key, keyPath) {
+				
 				console.log(key, keyPath)
 			}
 		}

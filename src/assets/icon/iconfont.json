@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4499382",
+      "name": "自我评价",
+      "font_class": "ziwopingjia",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "9002235",
+      "name": "身份证号",
+      "font_class": "shenfenzheng",
+      "unicode": "e68e",
+      "unicode_decimal": 59022
+    },
+    {
+      "icon_id": "17196566",
+      "name": "电 话",
+      "font_class": "dianhua",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "20003288",
+      "name": "邮 箱",
+      "font_class": "youxiang",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "19138023",
+      "name": "个人中心 - 中",
+      "font_class": "my2-act",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "3005798",
       "name": "选题-平台",
       "font_class": "xuanti-pingtai",
@@ -22,7 +57,7 @@
     {
       "icon_id": "720794",
       "name": "验证码 ",
-      "font_class": "yanzhengma2",
+      "font_class": "yanzhengma",
       "unicode": "e656",
       "unicode_decimal": 58966
     },

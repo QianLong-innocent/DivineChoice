@@ -20,9 +20,10 @@
 				<!-- 搜索按钮触发之后刷新tableData -->
 				<el-table :data="tableData.slice((currentPage-1)*10,currentPage*10)" style="width: 100%" height="520px"
 					stripe>
-					<el-table-column label="#" width="180" :index="indexMethod" type="index"></el-table-column>
-					<el-table-column prop="project_id" label="项目编号" width="180" />
-					<el-table-column prop="project_name" label="项目名称" width="400" />
+					<el-table-column label="#" :index="indexMethod" type="index" align="center"></el-table-column>
+					<el-table-column prop="project_id" label="项目编号" align="center" />
+					<el-table-column prop="project_name" label="项目名称" align="center" />
+					<el-table-column label="操作" width="300" align="center"></el-table-column>
 				</el-table>
 				<el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="10"
 					layout="total, prev, pager, next" :total='tableData.length' id="paging">
@@ -43,7 +44,6 @@
 		name: 'ChoiceTypeOne',
 		data() {
 			return {
-				searchForTeacher: '',
 				teacherName: '',
 				teacherNameArray: '',
 				tableData: [],
@@ -66,6 +66,7 @@
 					})
 					.then(function(response) {
 						that.tableData = response.data
+						Message.success("查询成功")
 						document.getElementById('paging').style.display = 'block'
 					})
 					.catch(function(error) {
@@ -78,6 +79,7 @@
 			let that = this
 			axios.get("http://localhost:8080/api/teacherProjects/selectTeacherName")
 				.then(function(response) {
+					
 					that.teacherNameArray = response.data
 				})
 				.catch(function(error) {

@@ -118,7 +118,7 @@
 						message: '请输入用户类型',
 						trigger: 'change'
 					}]
-				},
+				}
 
 			}
 		},
