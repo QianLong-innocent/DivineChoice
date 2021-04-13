@@ -44,7 +44,7 @@
 			<!-- </div> -->
 			<!-- <div style="margin-left: 200px;"> -->
 			<el-form-item style="margin-top: -14px;">
-				<el-button type="primary" round style="width: 150px;" @click="onSubmit()" :plain="true">
+				<el-button type="primary" round style="width: 150px;" @click="onSubmit('userMessageform')" :plain="true">
 					修改个人信息
 				</el-button>
 			</el-form-item>
@@ -55,6 +55,9 @@
 
 <script>
 	import axios from 'axios';
+	import {
+		Message
+	} from 'element-ui';
 	export default {
 		name: 'AlterMessage',
 		data() {
@@ -71,9 +74,61 @@
 			}
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
+			onSubmit(userMessageform) {
+				// 为表单绑定验证功能
+				this.$refs[userMessageform].validate((valid) => {
+				
+					// 当用户，没有按照规则填写登录信息，就会是false
+					if (valid) {
+				
+						this.$confirm('此操作将修改个人信息, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+							// 开始登录验证
+							let that = this
+							axios.put("http://localhost:8080/api/studentInfos/updateByPrimaryKeyChangeMessage", {
+								student_id: JSON.parse(this.$store.state.token).student_id,
+								password:JSON.parse(this.$store.state.token).password,
+								name: JSON.parse(this.$store.state.token).name,
+								id_card: this.userMessageform.ID_Card,
+								sex: this.userMessageform.sex,
+								birthday:this.userMessageform.birthday,
+								phone: this.userMessageform.phone,
+								email: this.userMessageform.email,
+								remark: this.userMessageform.remark
+							}).then(function(response) {
+								
+								Message.success("更新成功")
+								// 随之更新token
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								
+							
+							}).catch(function(error) {
+								Message.error("请检查网络")
+							})
+							
+						}).catch(() => {
+							this.$message({
+								type: 'error',
+								message: '已取消修改'
+							});
+						});
+						
+					}
+				
+				});
 			}
+		},
+		mounted() {
+			// 自动填充 
+			this.userMessageform.ID_Card = JSON.parse(this.$store.state.token).id_card
+			this.userMessageform.sex = JSON.parse(this.$store.state.token).sex
+			this.userMessageform.birthday = JSON.parse(this.$store.state.token).birthday
+			this.userMessageform.phone = JSON.parse(this.$store.state.token).phone
+			this.userMessageform.email = JSON.parse(this.$store.state.token).email
+			this.userMessageform.remark = JSON.parse(this.$store.state.token).remark
 		}
 	}
 </script>

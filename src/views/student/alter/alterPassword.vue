@@ -104,28 +104,43 @@
 
 					// 当用户，没有按照规则填写登录信息，就会是false
 					if (valid) {
-						// 开始登录验证
-						let that = this
-						axios.put("http://localhost:8080/api/studentInfos/updateByPrimaryKeyChangePassword", {
-							student_id: JSON.parse(this.$store.state.token).student_id,
-							passwordBefore: this.form.originalPassword,
-							password: this.form.alterPassword
-						}).then(function(response) {
-							Message.success("更新密码成功")
+
+						this.$confirm('此操作将修改密码, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
 							
-							var flag = JSON.parse(that.$store.state.token)
-							flag.password = that.form.alterPassword
+							// 开始登录验证
+							let that = this
+							axios.put("http://localhost:8080/api/studentInfos/updateByPrimaryKeyChangePassword", {
+								student_id: JSON.parse(this.$store.state.token).student_id,
+								passwordBefore: this.form.originalPassword,
+								password: this.form.alterPassword
+							}).then(function(response) {
+								Message.success("更新密码成功")
 							
-							that.$store.commit('$_setToken', JSON.stringify(flag));
+								var flag = JSON.parse(that.$store.state.token)
+								flag.password = that.form.alterPassword
 							
-							console.log(JSON.parse(that.$store.state.token))
-							that.form.originalPassword = ''
-							that.form.alterPassword = ''
-							that.form.confirmPassword = ''
+								that.$store.commit('$_setToken', JSON.stringify(flag));
 							
-						}).catch(function(error) {
-							Message.error("原密码错误")
-						})
+								// console.log(JSON.parse(that.$store.state.token))
+								that.form.originalPassword = ''
+								that.form.alterPassword = ''
+								that.form.confirmPassword = ''
+							
+							}).catch(function(error) {
+								Message.error("原密码错误")
+							})
+							
+						}).catch(() => {
+							this.$message({
+								type: 'error',
+								message: '已取消修改密码'
+							});
+						});
+						
 					}
 
 				});
