@@ -34,6 +34,8 @@
 		},
 		methods: {
 			exit() {
+				this.$store.state.token = ""
+				this.$store.state.loginUser = ""
 				this.$store.commit('$_removeStorage', window.localStorage.token);
 				this.$router.push("/login")
 			}

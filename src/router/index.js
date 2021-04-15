@@ -21,6 +21,13 @@ import Login from '../views/login/login.vue'
 Vue.use(Router);
 
 
+
+// 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
+const originalReplace = VueRouter.prototype.replace;
+Router.prototype.replace = function replace(location) {
+	return originalReplace.call(this, location).catch(err => err);
+};
+
 const router = new VueRouter({
 	mode: 'history',
 	routes: [{
@@ -65,7 +72,7 @@ const router = new VueRouter({
 				chineseName1: '按题型选题'
 			},
 			component: ChoiceTypeTwo
-		},{
+		}, {
 			path: '/student/alterMessage',
 			name: 'alterMessage',
 			meta: {
@@ -73,7 +80,7 @@ const router = new VueRouter({
 				chineseName1: '修改个人信息'
 			},
 			component: AlterMessage
-		},{
+		}, {
 			path: '/student/alterPassword',
 			name: 'alterPassword',
 			meta: {
@@ -105,7 +112,7 @@ export default router;
 
 
 router.beforeEach((to, from, next) => {
-	
+
 	if(to.path === '/login' && store.state.loginUser !== ""){
 		var uri = store.state.loginUser.substr(1, store.state.loginUser.length - 2)
 		next({
@@ -120,7 +127,7 @@ router.beforeEach((to, from, next) => {
 		// if not, redirect to login page.
 		// 这里面就开始判断，是否有过登录。如果没有登录，那么就重定向到login。反之正常进入
 
-		
+
 		if (to.matched[0].meta.requireAuth == true) {
 
 			// 如果为true 说明都是必须要进行登陆的

@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6305170",
+      "name": "详情",
+      "font_class": "xiangqing",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "11647227",
+      "name": "选择",
+      "font_class": "xuanze",
+      "unicode": "eb52",
+      "unicode_decimal": 60242
+    },
+    {
+      "icon_id": "16315168",
+      "name": "设 置",
+      "font_class": "shezhi",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
       "icon_id": "4499382",
       "name": "自我评价",
       "font_class": "ziwopingjia",

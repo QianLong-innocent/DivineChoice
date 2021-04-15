@@ -19,11 +19,29 @@
 			<div style="padding: 12px;">
 				<!-- 搜索按钮触发之后刷新tableData -->
 				<el-table :data="tableData.slice((currentPage-1)*10,currentPage*10)" style="width: 100%" height="520px"
-					stripe>
+					stripe ref="evtTable">
 					<el-table-column label="#" :index="indexMethod" type="index" align="center"></el-table-column>
 					<el-table-column prop="project_id" label="项目编号" align="center" />
 					<el-table-column prop="project_name" label="项目名称" align="center" />
-					<el-table-column label="操作" width="300" align="center"></el-table-column>
+					<el-table-column label="操作" width="300" align="center">
+						<template slot-scope="scope">
+							<el-button type="primary" size="mini" @click="clickRowHandle(scope.$index, scope.row)">
+								<i class="iconfont iconxiangqing"></i>
+								查看详情
+							</el-button>
+							<el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
+								<i class="iconfont iconxuanze"></i>
+								选题
+							</el-button>
+						</template>
+					</el-table-column>
+					<!-- 展开行 -->
+					<el-table-column type="expand" width="1">
+						<template slot-scope="props">
+							&emsp;&emsp;{{props.row.project_content}}
+						</template>
+					</el-table-column>
+
 				</el-table>
 				<el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="10"
 					layout="total, prev, pager, next" :total='tableData.length' id="paging">
@@ -31,6 +49,21 @@
 			</div>
 		</div>
 
+		<!-- 选题嵌套表单 -->
+		<el-dialog title="选题" :visible.sync="dialogFormVisible" style="width: 600px;margin-left: 30%;margin-top: 5%;">
+			<el-form :model="form">
+				<el-form-item label="志愿">
+					<el-select v-model="form.volunteer" placeholder="请选择志愿" style="width: 200px;">
+						<el-option label="第一志愿" value="1"></el-option>
+						<el-option label="第二志愿" value="2"></el-option>
+					</el-select>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="cancelChoice()">取 消</el-button>
+				<el-button type="primary" @click="confirmChoice()">确 定</el-button>
+			</div>
+		</el-dialog>
 
 	</div>
 </template>
@@ -47,10 +80,52 @@
 				teacherName: '',
 				teacherNameArray: '',
 				tableData: [],
-				currentPage: 1
+				currentPage: 1,
+				dialogFormVisible: false,
+				form: {
+					volunteer: '',
+					project_name: ''
+				}
 			}
 		},
 		methods: {
+			cancelChoice() {
+				this.dialogFormVisible = false
+				Message.error("取消选题")
+			},
+			confirmChoice() {
+
+				let that = this
+				axios.put("http://localhost:8080/api/studentChoices/updateChoiceProject", {
+						student_id: JSON.parse(that.$store.state.token).student_id,
+						name: that.form.project_name,
+						volunteer: that.form.volunteer
+					})
+					.then(function(response) {
+						
+						that.dialogFormVisible = false
+						// console.log(this.form.project_id)
+						Message.success("选题成功")
+					})
+					.catch(function(error) {
+						
+						that.dialogFormVisible = false
+						
+						Message.error(error.response.data)
+					})
+
+			},
+			clickRowHandle(index, row) {
+				this.$refs.evtTable.toggleRowExpansion(row);
+			},
+			handleEdit(index, row) {
+
+				// 跳二级标题。
+				this.dialogFormVisible = true
+				this.form.project_name = row.project_name
+				// console.log(index, row);
+
+			},
 			handleCurrentChange(val) {
 				this.currentPage = val;
 			},
@@ -79,7 +154,7 @@
 			let that = this
 			axios.get("http://localhost:8080/api/teacherProjects/selectTeacherName")
 				.then(function(response) {
-					
+
 					that.teacherNameArray = response.data
 				})
 				.catch(function(error) {
