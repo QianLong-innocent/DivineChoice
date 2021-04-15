@@ -145,6 +145,7 @@
 						} else {
 							Message.success("查询成功")
 							that.tableData = response.data
+							// console.log(that.tableData)
 							document.getElementById('paging').style.display = 'block'
 						}
 					})

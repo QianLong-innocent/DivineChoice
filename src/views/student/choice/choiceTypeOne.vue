@@ -102,15 +102,15 @@
 						volunteer: that.form.volunteer
 					})
 					.then(function(response) {
-						
+
 						that.dialogFormVisible = false
 						// console.log(this.form.project_id)
 						Message.success("选题成功")
 					})
 					.catch(function(error) {
-						
+
 						that.dialogFormVisible = false
-						
+
 						Message.error(error.response.data)
 					})
 
@@ -141,6 +141,7 @@
 					})
 					.then(function(response) {
 						that.tableData = response.data
+						// console.log(that.tableData)
 						Message.success("查询成功")
 						document.getElementById('paging').style.display = 'block'
 					})

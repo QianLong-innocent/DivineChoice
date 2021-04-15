@@ -9,6 +9,9 @@ import ChoiceTypeOne from '../views/student/choice/choiceTypeOne.vue'
 import ChoiceTypeTwo from '../views/student/choice/choiceTypeTwo.vue'
 import AlterMessage from '../views/student/alter/alterMessage.vue'
 import AlterPassword from '../views/student/alter/alterPassword.vue'
+import AlterVolunteer from '../views/student/alter/alterVolunteer.vue'
+
+
 
 import TeacherMain from '../views/teacher/teacherMain.vue'
 import LeaderMain from '../views/leader/leaderMain.vue'
@@ -88,6 +91,14 @@ const router = new VueRouter({
 				chineseName1: '修改密码'
 			},
 			component: AlterPassword
+		},{
+			path: '/student/alterVolunteer',
+			name: 'alterVolunteer',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '查看志愿'
+			},
+			component: AlterVolunteer
 		}]
 	}, {
 		// 老师首页

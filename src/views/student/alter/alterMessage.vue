@@ -19,7 +19,7 @@
 			<el-form-item label="性别" prop="sex">
 
 				<el-select placeholder="性别" style="width: 200px;" v-model="userMessageform.sex">
-					<i slot="prefix" class="iconfont iconshenfenzheng"></i>
+					<i slot="prefix" class="iconfont iconxingbie" style="margin-left: 4px;"></i>
 					<el-option label="男" value="男"></el-option>
 					<el-option label="女" value="女"></el-option>
 				</el-select>

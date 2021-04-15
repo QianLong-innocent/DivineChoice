@@ -28,8 +28,12 @@
 						<el-menu-item index="3-1">&emsp;&emsp;修改个人信息
 						</el-menu-item>
 					</router-link>
+					<router-link to="/student/alterVolunteer">
+						<el-menu-item index="3-2">&emsp;&emsp;查看志愿
+						</el-menu-item>
+					</router-link>
 					<router-link to="/student/alterPassword">
-						<el-menu-item index="3-2">&emsp;&emsp;修改密码
+						<el-menu-item index="3-3">&emsp;&emsp;修改密码
 						</el-menu-item>
 					</router-link>
 				</el-submenu>

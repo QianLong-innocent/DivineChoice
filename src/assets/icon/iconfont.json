@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12269496",
+      "name": "性别",
+      "font_class": "xingbie",
+      "unicode": "e6c6",
+      "unicode_decimal": 59078
+    },
+    {
       "icon_id": "6305170",
       "name": "详情",
       "font_class": "xiangqing",
