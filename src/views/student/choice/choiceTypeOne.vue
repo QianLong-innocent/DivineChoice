@@ -106,6 +106,11 @@
 						that.dialogFormVisible = false
 						// console.log(this.form.project_id)
 						Message.success("选题成功")
+						
+						that.timer = setTimeout(() => { //设置延迟执行
+							that.$router.go(0)
+						}, 1000);
+						
 					})
 					.catch(function(error) {
 
