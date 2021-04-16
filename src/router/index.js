@@ -12,8 +12,16 @@ import AlterPassword from '../views/student/alter/alterPassword.vue'
 import AlterVolunteer from '../views/student/alter/alterVolunteer.vue'
 
 
-
 import TeacherMain from '../views/teacher/teacherMain.vue'
+import HomeTeacher from '../views/teacher/index/home.vue'
+import AlterMessageTeacher from '../views/teacher/alter/alterMessage.vue'
+import AlterPasswordTeacher from '../views/teacher/alter/alterPassword.vue'
+
+
+
+
+
+
 import LeaderMain from '../views/leader/leaderMain.vue'
 
 
@@ -107,7 +115,32 @@ const router = new VueRouter({
 		meta: {
 			requireAuth: true
 		},
-		component: TeacherMain
+		component: TeacherMain,
+		redirect: HomeTeacher,
+		children: [{
+			path: '/teacher/home',
+			name: 'HomeTeacher',
+			meta: {
+				chineseName: '首页'
+			},
+			component: HomeTeacher
+		},{
+			path: '/teacher/alterMessage',
+			name: 'alterMessage',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改个人信息'
+			},
+			component: AlterMessageTeacher
+		},{
+			path: '/teacher/alterPassword',
+			name: 'alterPassword',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改密码'
+			},
+			component: AlterPasswordTeacher
+		}]
 	}, {
 		// 主任首页
 		path: '/leader',
@@ -130,7 +163,8 @@ router.beforeEach((to, from, next) => {
 			path: uri
 		})
 	}
-
+		
+	// console.log(to.path)
 	// 遍历当前访问的url。里面的数据，是否为：true。
 	// 是否需要登录
 	if (to.matched.some(record => record.meta.requireAuth)) {
