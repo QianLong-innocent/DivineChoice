@@ -2,7 +2,7 @@
 	<div style="background-color: #FFFFFF;">
 		<div style="height: 650px;">
 			<div style="padding: 12px;">
-				<el-table :data="tablesData" ref="evtTable" style="width: 100%" height="520px" stripe>
+				<el-table :data="tablesData" ref="evtTable" style="width: 100%" height="520px" stripe v-loading="loading">
 					<el-table-column label="#" prop="index" align="center"></el-table-column>
 					<el-table-column prop="project_id" label="项目编号" align="center"></el-table-column>
 					<el-table-column width="400" prop="project_name" label="项目名称" align="center"></el-table-column>
@@ -14,7 +14,7 @@
 								<i class="iconfont iconxiangqing"></i>
 								查看详情
 							</el-button>
-							<el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">
+							<el-button type="danger" size="mini" @click="handleEdit(scope.$index, scope.row)">
 								<i class="iconfont iconxuanze"></i>
 								退选
 							</el-button>
@@ -53,7 +53,8 @@
 		name: 'AlterVolunteer',
 		data() {
 			return {
-				tablesData: []
+				tablesData: [],
+				loading:false
 			}
 		},
 		methods: {
@@ -102,10 +103,16 @@
 						})
 						.then(function(response) {
 							// that.deleteF5()
-							Message.success("退选成功")
-
+							that.$message({
+								message: '退选成功',
+								type:'success',
+								duration:'1000',
+								center: true
+							});
+							that.loading = true
 							that.timer = setTimeout(() => { //设置延迟执行
-								that.$router.go(0)
+								that.loading = false
+								that.deleteF5()
 							}, 1000);
 
 							

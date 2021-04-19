@@ -30,7 +30,7 @@
 		Message
 	} from 'element-ui';
 	export default {
-		name: 'AlterPassword',
+		name: 'AlterPasswordTeacher',
 		data() {
 
 			var checkPassword = (rule, value, callback) => {

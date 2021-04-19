@@ -2,8 +2,8 @@
 	<div style="margin-left: 30%;margin-top: 20px;">
 		<el-form label-width="80px" :model="userMessageform" ref="userMessageform" :rules="rules">
 			<!-- <div style="float: left;"> -->
-			<el-form-item label="学号">
-				<el-input v-model="userMessageform.user.student_id" :disabled="true" prefix-icon="el-icon-user">
+			<el-form-item label="工号">
+				<el-input v-model="userMessageform.user.teacher_id" :disabled="true" prefix-icon="el-icon-user">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="姓名">
@@ -28,7 +28,7 @@
 			<!-- <div style="float: right;margin-right: 15%;"> -->
 			<el-form-item label="出生日期" prop="birthday">
 				<el-date-picker type="date" placeholder="选择日期" v-model="userMessageform.birthday"
-					value-format="yyyy-MM-dd"></el-date-picker>
+					value-format="yyyy-MM-dd" style="width: 200px;"></el-date-picker>
 			</el-form-item>
 			<el-form-item label="电话" prop="phone">
 				<el-input v-model="userMessageform.phone" placeholder="电话">
@@ -71,7 +71,7 @@
 	}
 
 	export default {
-		name: 'AlterMessage',
+		name: 'AlterMessageTeacher',
 		data() {
 			var checkID_Card = (rule, value, callback) => {
 				if (value.length !== 18) {
@@ -177,7 +177,7 @@
 				rules: {
 					ID_Card: [{
 						validator: checkID_Card,
-						trigger: 'blur'
+						trigger: 'change'
 					}],
 					sex: [{
 						validator: checkSex,
@@ -193,7 +193,7 @@
 					}],
 					email: [{
 						validator: checkEmail,
-						trigger: 'blur'
+						trigger: 'change'
 					}],
 					remark: [{
 						validator: checkRemark,

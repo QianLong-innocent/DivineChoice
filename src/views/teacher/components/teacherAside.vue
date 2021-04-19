@@ -11,13 +11,31 @@
 				</router-link>
 				<el-submenu index="2">
 					<template slot="title"><i class="iconfont iconshezhi"
+							style="margin-left: 4px;"></i>&emsp;项目管理</template>
+					
+					<router-link to="/teacher/MyProject">
+						<el-menu-item index="2-1">&emsp;&emsp;我的项目
+						</el-menu-item>
+					</router-link>
+					<router-link to="/teacher/addProjectType">
+						<el-menu-item index="2-2">&emsp;&emsp;添加题型
+						</el-menu-item>
+					</router-link>
+					<router-link to="/teacher/addProject">
+						<el-menu-item index="2-3">&emsp;&emsp;添加题目
+						</el-menu-item>
+					</router-link>
+					
+				</el-submenu>
+				<el-submenu index="3">
+					<template slot="title"><i class="iconfont iconshezhi"
 							style="margin-left: 4px;"></i>&emsp;设置</template>
 					<router-link to="/teacher/alterMessage">
-						<el-menu-item index="2-1">&emsp;&emsp;修改个人信息
+						<el-menu-item index="3-1">&emsp;&emsp;修改个人信息
 						</el-menu-item>
 					</router-link>
 					<router-link to="/teacher/alterPassword">
-						<el-menu-item index="2-2">&emsp;&emsp;修改密码
+						<el-menu-item index="3-2">&emsp;&emsp;修改密码
 						</el-menu-item>
 					</router-link>
 				</el-submenu>

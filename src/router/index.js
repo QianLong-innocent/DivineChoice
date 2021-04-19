@@ -16,7 +16,9 @@ import TeacherMain from '../views/teacher/teacherMain.vue'
 import HomeTeacher from '../views/teacher/index/home.vue'
 import AlterMessageTeacher from '../views/teacher/alter/alterMessage.vue'
 import AlterPasswordTeacher from '../views/teacher/alter/alterPassword.vue'
-
+import AddProjectType from '../views/teacher/add/addProjectType.vue'
+import AddProject from '../views/teacher/add/addProject.vue'
+import MyProject from '../views/teacher/add/myProject.vue'
 
 
 
@@ -125,8 +127,32 @@ const router = new VueRouter({
 			},
 			component: HomeTeacher
 		},{
+			path: '/teacher/addProjectType',
+			name: 'AddProjectType',
+			meta: {
+				chineseName: '项目管理',
+				chineseName1: '添加项目类型'
+			},
+			component: AddProjectType
+		},{
+			path: '/teacher/myProject',
+			name: 'MyProject',
+			meta: {
+				chineseName: '项目管理',
+				chineseName1: '我的项目'
+			},
+			component: MyProject
+		},{
+			path: '/teacher/addProject',
+			name: 'AddProject',
+			meta: {
+				chineseName: '项目管理',
+				chineseName1: '添加项目'
+			},
+			component: AddProject
+		},{
 			path: '/teacher/alterMessage',
-			name: 'alterMessage',
+			name: 'AlterMessageTeacher',
 			meta: {
 				chineseName: '个人中心',
 				chineseName1: '修改个人信息'
@@ -134,7 +160,7 @@ const router = new VueRouter({
 			component: AlterMessageTeacher
 		},{
 			path: '/teacher/alterPassword',
-			name: 'alterPassword',
+			name: 'AlterPasswordTeacher',
 			meta: {
 				chineseName: '个人中心',
 				chineseName1: '修改密码'

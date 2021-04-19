@@ -11,7 +11,10 @@
 					<el-option v-for="item in teacherNameArray" :label="item" :value="item" :key="item"></el-option>
 				</el-select>
 				&emsp;
-				<el-button type="primary" @click="searchTeacherProject()">搜索</el-button>
+				<el-button type="primary" @click="searchTeacherProject()">
+					<i class="iconfont iconxingtaiduICON_sousuo---copy"></i>
+					搜索
+				</el-button>
 			</div>
 		</div>
 		<!-- 下半部分 -->
@@ -19,7 +22,7 @@
 			<div style="padding: 12px;">
 				<!-- 搜索按钮触发之后刷新tableData -->
 				<el-table :data="tableData.slice((currentPage-1)*10,currentPage*10)" style="width: 100%" height="520px"
-					stripe ref="evtTable">
+					stripe ref="evtTable" v-loading="loading">
 					<el-table-column label="#" :index="indexMethod" type="index" align="center"></el-table-column>
 					<el-table-column prop="project_id" label="项目编号" align="center" />
 					<el-table-column prop="project_name" label="项目名称" align="center" />
@@ -81,6 +84,7 @@
 				teacherNameArray: '',
 				tableData: [],
 				currentPage: 1,
+				loading:false,
 				dialogFormVisible: false,
 				form: {
 					volunteer: '',
@@ -105,12 +109,18 @@
 
 						that.dialogFormVisible = false
 						// console.log(this.form.project_id)
-						Message.success("选题成功")
-						
+						that.$message({
+							message: '选题成功',
+							type:'success',
+							duration:'1000',
+							center: true
+						});
+						that.loading = true
 						that.timer = setTimeout(() => { //设置延迟执行
-							that.$router.go(0)
+							that.loading = false
+							that.searchTeacherProject()
 						}, 1000);
-						
+
 					})
 					.catch(function(error) {
 

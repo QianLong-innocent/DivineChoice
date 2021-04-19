@@ -28,7 +28,7 @@
 			<!-- <div style="float: right;margin-right: 15%;"> -->
 			<el-form-item label="出生日期" prop="birthday">
 				<el-date-picker type="date" placeholder="选择日期" v-model="userMessageform.birthday"
-					value-format="yyyy-MM-dd"></el-date-picker>
+					value-format="yyyy-MM-dd" style="width: 200px;"></el-date-picker>
 			</el-form-item>
 			<el-form-item label="电话" prop="phone">
 				<el-input v-model="userMessageform.phone" placeholder="电话">
@@ -177,7 +177,7 @@
 				rules: {
 					ID_Card: [{
 						validator: checkID_Card,
-						trigger: 'blur'
+						trigger: 'change'
 					}],
 					sex: [{
 						validator: checkSex,
@@ -193,7 +193,7 @@
 					}],
 					email: [{
 						validator: checkEmail,
-						trigger: 'blur'
+						trigger: 'change'
 					}],
 					remark: [{
 						validator: checkRemark,
