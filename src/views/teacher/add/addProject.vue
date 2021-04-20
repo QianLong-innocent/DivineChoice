@@ -3,14 +3,15 @@
 		<el-form label-width="80px" :model="teacherProjectTable" ref="teacherProjectTable" :rules="rules">
 
 			<el-form-item label="项目名" prop="project_name">
-				<el-input v-model="teacherProjectTable.project_name" prefix-icon="el-icon-user" placeholder="项目名"
+				<el-input v-model="teacherProjectTable.project_name" placeholder="项目名"
 					style="width: 400px;">
+					<i slot="prefix" class="iconfont iconxiangmu" style="margin-left: 4px;"></i>
 				</el-input>
 			</el-form-item>
 
 			<el-form-item label="所属专业" prop="professional">
 				<el-select placeholder="专业" style="width: 400px;" v-model="teacherProjectTable.professional">
-					<i slot="prefix" class="iconfont iconxingbie" style="margin-left: 4px;"></i>
+					<i slot="prefix" class="iconfont iconzhuanye" style="margin-left: 4px;"></i>
 					<el-option label="计科" value="计科"></el-option>
 					<el-option label="软工" value="软工"></el-option>
 				</el-select>
@@ -20,7 +21,7 @@
 
 				<el-select placeholder="项目类型" style="width: 400px;" v-model="teacherProjectTable.project_type">
 					<!-- 获取获取所有题型 -->
-					<i slot="prefix" class="iconfont iconxingbie" style="margin-left: 4px;"></i>
+					<i slot="prefix" class="iconfont iconleixing" style="margin-left: 4px;"></i>
 					<el-option v-for="item in projectTypeArray" :label="item" :value="item" :key="item"></el-option>
 				</el-select>
 

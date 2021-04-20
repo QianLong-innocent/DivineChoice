@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "981649",
+      "name": "类型",
+      "font_class": "leixing",
+      "unicode": "e747",
+      "unicode_decimal": 59207
+    },
+    {
+      "icon_id": "1263354",
+      "name": "项目",
+      "font_class": "xiangmu",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "10174541",
+      "name": "专业",
+      "font_class": "zhuanye",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
       "icon_id": "8596902",
       "name": "删 除",
       "font_class": "shanchu",

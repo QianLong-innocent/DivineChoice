@@ -180,6 +180,7 @@
 				}).then(() => {
 
 					let that = this
+					
 					axios.post("http://localhost:8080/api/teacherProjects/deleteProject", {
 							project_id: row.project_id,
 							project_name: row.project_name,
@@ -201,8 +202,8 @@
 
 						})
 						.catch(function(error) {
-
-							Message.error("请检查网络")
+							
+							Message.error(error.response.data)
 						})
 
 
@@ -232,7 +233,7 @@
 						document.getElementById('paging').style.display = 'block'
 					})
 					.catch(function(error) {
-						console.log(error)
+						// console.log(error)
 						Message.error("请检查网络")
 					})
 			}
