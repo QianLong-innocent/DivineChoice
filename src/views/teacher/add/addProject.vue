@@ -53,7 +53,7 @@
 		name: 'AddProject',
 		data() {
 			return {
-				projectTypeArray:'',
+				projectTypeArray: '',
 				teacherProjectTable: {
 					project_name: '',
 					project_content: '',
@@ -87,15 +87,25 @@
 		},
 		methods: {
 			onSubmit(form) {
-
+				
 				// 为表单绑定验证功能
 				this.$refs[form].validate((valid) => {
 
 					if (valid) {
-						
-						
-						console.log("添加成功！")
-						
+
+						let that = this
+						axios.post("http://localhost:8080/api/teacherProjects/insertProject/" + this.teacherProjectTable.project_type, {
+								name:JSON.parse(that.$store.state.token).name,
+								project_name:this.teacherProjectTable.project_name,
+								project_content:this.teacherProjectTable.project_content,
+								professional:this.teacherProjectTable.professional
+							})
+							.then(function(response) {
+								Message.success("添加成功")
+							})
+							.catch(function(error) {
+								Message.error(error.response.data)
+							})
 						
 					}
 				});

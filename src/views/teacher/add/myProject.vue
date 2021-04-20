@@ -113,35 +113,50 @@
 			confirmEdit() {
 
 				this.dialogFormVisible = false
-				let that = this
-				axios.put("http://localhost:8080/api/teacherProjects/updateProjectNameAndContent", {
-						project_name: this.form.project_name,
-						project_newName: this.form.project_newName,
-						project_content: this.form.project_content
-					})
-					.then(function(response) {
 
-						that.dialogFormVisible = false
 
-						that.$message({
-							message: '编辑成功',
-							type:'success',
-							duration:'1000',
-							center: true
-						});
-						that.loading = true
-						that.timer = setTimeout(() => { //设置延迟执行
-							that.loading = false
-							that.searchTeacherProject()
-						}, 1000);
+				this.$confirm('此操作将修改被选信息, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
 
-					})
-					.catch(function(error) {
+					let that = this
+					axios.put("http://localhost:8080/api/teacherProjects/updateProjectNameAndContent", {
+							project_name: this.form.project_name,
+							project_newName: this.form.project_newName,
+							project_content: this.form.project_content,
+							professional: this.professional
+						})
+						.then(function(response) {
 
-						that.dialogFormVisible = false
+							that.dialogFormVisible = false
 
-						Message.error(error.response.data)
-					})
+							that.$message({
+								message: '编辑成功',
+								type: 'success',
+								duration: '1000',
+								center: true
+							});
+							that.loading = true
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.loading = false
+								that.searchTeacherProject()
+							}, 1000);
+
+						})
+						.catch(function(error) {
+
+							that.dialogFormVisible = false
+
+							Message.error(error.response.data)
+						})
+				}).catch(() => {
+					this.$message({
+						type: 'error',
+						message: '已取消'
+					});
+				});
 
 			},
 			clickRowHandle(index, row) {
@@ -154,17 +169,42 @@
 				this.form.project_name = row.project_name
 				this.form.project_newName = row.project_name
 				this.form.project_content = row.project_content
+
 			},
 			handleDelete(index, row) {
-
-				this.$confirm('此操作也会删除被选学生, 是否继续?', '提示', {
+				// console.log(row)
+				this.$confirm('此操作将删除被选学生, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
 
-					Message.success("删除成功")
-					
+					let that = this
+					axios.post("http://localhost:8080/api/teacherProjects/deleteProject", {
+							project_id: row.project_id,
+							project_name: row.project_name,
+							professional: row.professional
+						})
+						.then(function(response) {
+
+							that.$message({
+								message: '删除成功',
+								type: 'success',
+								duration: '1000',
+								center: true
+							});
+							that.loading = true
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.loading = false
+								that.searchTeacherProject()
+							}, 1000);
+
+						})
+						.catch(function(error) {
+
+							Message.error("请检查网络")
+						})
+
 
 				}).catch(() => {
 					this.$message({
