@@ -115,11 +115,10 @@
 								that.deleteF5()
 							}, 1000);
 
-							
-
+					
 						})
 						.catch(function(error) {
-							Message.error("网络繁忙")
+							Message.error(error.response.data)
 						})
 
 				}).catch(() => {

@@ -25,6 +25,10 @@
 						<el-menu-item index="2-3">&emsp;&emsp;添加题目
 						</el-menu-item>
 					</router-link>
+					<router-link to="/teacher/choiceStudent">
+						<el-menu-item index="2-4">&emsp;&emsp;选择学生
+						</el-menu-item>
+					</router-link>
 					
 				</el-submenu>
 				<el-submenu index="3">

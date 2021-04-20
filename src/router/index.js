@@ -19,7 +19,7 @@ import AlterPasswordTeacher from '../views/teacher/alter/alterPassword.vue'
 import AddProjectType from '../views/teacher/add/addProjectType.vue'
 import AddProject from '../views/teacher/add/addProject.vue'
 import MyProject from '../views/teacher/add/myProject.vue'
-
+import ChoiceStudent from '../views/teacher/choice/choiceStudent.vue'
 
 
 
@@ -150,6 +150,14 @@ const router = new VueRouter({
 				chineseName1: '添加项目'
 			},
 			component: AddProject
+		},{
+			path: '/teacher/choiceStudent',
+			name: 'ChoiceStudent',
+			meta: {
+				chineseName: '项目管理',
+				chineseName1: '选择学生'
+			},
+			component: ChoiceStudent
 		},{
 			path: '/teacher/alterMessage',
 			name: 'AlterMessageTeacher',
