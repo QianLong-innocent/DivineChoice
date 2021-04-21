@@ -90,6 +90,27 @@
 				</el-pagination>
 			</div>
 		</div>
+		
+		
+		<!-- 选题嵌套表单 -->
+		<el-dialog title="选题" :visible.sync="dialogFormVisible" style="width: 600px;margin-left: 30%;margin-top: 5%;">
+			<el-form :model="form">
+				<el-form-item label="姓名">
+					<el-input v-model="form.teacherName" placeholder="学生姓名" style="width: 200px;">
+					</el-input>
+				</el-form-item>
+				<el-form-item label="密码">
+					<el-input v-model="form.password" placeholder="学生密码" style="width: 200px;">
+					</el-input>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="cancelChoice()">取 消</el-button>
+				<el-button type="primary" @click="confirmChoice()">确 定</el-button>
+			</div>
+		</el-dialog>
+		
+		
 	</div>
 </template>
 
@@ -104,21 +125,79 @@
 		name: "MessageTea",
 		data() {
 			return {
+				dialogFormVisible: false,
 				loading: false,
 				teacherName: '',
 				tableData: [],
-				currentPage: 1
+				currentPage: 1,
+				form: {
+					teacherID:'',
+					teacherName: '',
+					password: ''
+				}
 			}
 		},
 		methods: {
+			confirmChoice(){
+				this.dialogFormVisible = false
+				this.$confirm('此操作将修改教师基本信息, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					// console.log(this.form)
+					let that = this
+					axios.post("http://localhost:8080/api/teacherInfos/updateTeacherInfo", {
+							teacher_id:this.form.teacherID,
+							password:this.form.password,
+							name:this.form.teacherName
+						})
+						.then(function(response) {
+							// console.log(that.form)
+							that.dialogFormVisible = false
+					
+							that.$message({
+								message: '编辑成功',
+								type: 'success',
+								duration: '1000',
+								center: true
+							});
+							that.loading = true
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.loading = false
+								that.init()
+							}, 1000);
+					
+						})
+						.catch(function(error) {
+					
+							that.dialogFormVisible = false
+					
+							Message.error(error.response.data)
+						})
+				}).catch(() => {
+					this.$message({
+						type: 'error',
+						message: '已取消'
+					});
+				});
+				
+			},
+			cancelChoice() {
+				this.dialogFormVisible = false
+				Message.error("已取消")
+			},
 			clickRowHandle(index, row) {
 				this.$refs.evtTable.toggleRowExpansion(row);
 			},
 			handleEdit(index, row) {
-
+				this.form.teacherID = row.teacher_id
+				this.form.teacherName = row.name
+				this.form.password = row.password
+				this.dialogFormVisible = true
 			},
 			handleDelete(index, row) {
-
+				Message.success("删除成功")
 			},
 			handleCurrentChange(val) {
 				this.currentPage = val;
@@ -183,20 +262,23 @@
 					if (typeof console !== 'undefined') console.error(e);
 				}
 			},
+			init(){
+				let that = this
+				axios.get("http://localhost:8080/api/teacherInfos/selectAllTeacher")
+					.then(function(response) {
+						that.tableData = response.data
+						Message.success("查询成功")
+						// console.log(that.tableData)
+						document.getElementById('paging').style.display = 'block'
+					})
+					.catch(function(error) {
+						// console.log(error)
+						Message.error("请检查网络")
+					})
+			}
 		},
 		mounted() {
-			let that = this
-			axios.get("http://localhost:8080/api/teacherInfos/selectAllTeacher")
-				.then(function(response) {
-					that.tableData = response.data
-					Message.success("查询成功")
-					// console.log(that.tableData)
-					document.getElementById('paging').style.display = 'block'
-				})
-				.catch(function(error) {
-					// console.log(error)
-					Message.error("请检查网络")
-				})
+			this.init()
 		}
 	}
 </script>
