@@ -25,7 +25,12 @@ import ChoiceStudent from '../views/teacher/choice/choiceStudent.vue'
 
 
 import LeaderMain from '../views/leader/leaderMain.vue'
-
+import HomeLeader from '../views/leader/index/home.vue'
+import AlterMessageLeader from '../views/leader/alter/alterMessage.vue'
+import AlterPasswordLeader from '../views/leader/alter/alterPassword.vue'
+import RegisterUser from '../views/leader/manager/registerUser.vue'
+import MessageStu from '../views/leader/manager/messageStu.vue'
+import MessageTea from '../views/leader/manager/messageTea.vue'
 
 
 import Login from '../views/login/login.vue'
@@ -182,7 +187,56 @@ const router = new VueRouter({
 		meta: {
 			requireAuth: true
 		},
-		component: LeaderMain
+		component: LeaderMain,
+		redirect: HomeLeader,
+		children: [{
+			path: '/leader/home',
+			name: 'HomeLeader',
+			meta: {
+				chineseName: '首页'
+			},
+			component: HomeLeader
+		},{
+			path: '/leader/alterMessage',
+			name: 'AlterMessageLeader',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改个人信息'
+			},
+			component: AlterMessageLeader
+		},{
+			path: '/leader/alterPassword',
+			name: 'AlterPasswordLeader',
+			meta: {
+				chineseName: '个人中心',
+				chineseName1: '修改密码'
+			},
+			component: AlterPasswordLeader
+		},{
+			path: '/leader/registerUser',
+			name: 'RegisterUser',
+			meta: {
+				chineseName: '人员管理',
+				chineseName1: '注册用户'
+			},
+			component: RegisterUser
+		},{
+			path: '/leader/messageStu',
+			name: 'MessageStu',
+			meta: {
+				chineseName: '人员管理',
+				chineseName1: '学生信息'
+			},
+			component: MessageStu
+		},{
+			path: '/leader/messageTea',
+			name: 'MessageTea',
+			meta: {
+				chineseName: '人员管理',
+				chineseName1: '教师信息'
+			},
+			component: MessageTea
+		}]
 	}]
 });
 
