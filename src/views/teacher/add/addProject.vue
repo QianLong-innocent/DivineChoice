@@ -12,8 +12,8 @@
 			<el-form-item label="所属专业" prop="professional">
 				<el-select placeholder="专业" style="width: 400px;" v-model="teacherProjectTable.professional">
 					<i slot="prefix" class="iconfont iconzhuanye" style="margin-left: 4px;"></i>
-					<el-option label="计科" value="计科"></el-option>
-					<el-option label="软工" value="软工"></el-option>
+					<el-option label="计算机科学与技术" value="计科"></el-option>
+					<el-option label="软件工程" value="软工"></el-option>
 				</el-select>
 			</el-form-item>
 

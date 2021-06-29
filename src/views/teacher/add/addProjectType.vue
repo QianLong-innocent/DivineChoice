@@ -6,7 +6,8 @@
 			<div style="padding: 12px;float: right;margin-right: 20px;">
 				<el-button type="primary" @click="dialogFormVisible = true">
 					<i class="iconfont icon-tainjia"></i>
-					添加项目类型</el-button>
+					添加项目类型
+				</el-button>
 			</div>
 		</div>
 
@@ -14,10 +15,19 @@
 		<!-- 下半部分 -->
 		<div style="height: 570px;">
 			<div style="padding: 12px;">
-				<el-table :data="tableData.slice((currentPage-1)*10,currentPage*10)" style="width: 100%" height="520px">
+				<el-table :data="tableData.slice((currentPage-1)*10,currentPage*10)" style="width: 100%" 
+				height="520px" v-loading="loading">
 					<el-table-column label="#" :index="indexMethod" type="index" align="center"></el-table-column>
 					<el-table-column prop="id" label="项目类型编号" align="center" />
 					<el-table-column prop="project_type" label="项目类型" align="center" />
+					<el-table-column label="操作" width="300" align="center">
+						<template slot-scope="scope">
+							<el-button type="danger" size="mini" @click="handleDelete(scope.$index, scope.row)">
+								<i class="iconfont iconshanchu"></i>
+								删除
+							</el-button>
+						</template>
+					</el-table-column>
 				</el-table>
 
 				<el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="10"
@@ -55,6 +65,7 @@
 		name: "AddProjectType",
 		data() {
 			return {
+				loading: false,
 				tableData: [],
 				currentPage: 1,
 				dialogFormVisible: false,
@@ -65,6 +76,43 @@
 			}
 		},
 		methods: {
+			handleDelete(index, row) {
+				this.$confirm('此操作将删除该项目类型, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					
+					let that = this
+					axios.delete("http://localhost:8080/api/projectTypes/deleteProjectType/"+row.id)
+						.then(function(response) {
+							// that.deleteF5()
+							that.$message({
+								message: '删除成功',
+								type: 'success',
+								duration: '1000',
+								center: true
+							});
+							that.loading = true
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.loading = false
+								that.$_update()
+							}, 1000);
+					
+					
+						})
+						.catch(function(error) {
+							Message.error(error.response.data)
+						})
+					
+					
+				}).catch(() => {
+					this.$message({
+						type: 'error',
+						message: '已取消'
+					});
+				});
+			},
 			cancelAdd() {
 				this.dialogFormVisible = false
 				Message.error("已取消")
@@ -80,12 +128,22 @@
 						project_type: this.form.project_type
 					})
 					.then(function(response) {
-
+						
+						
+						
 						that.dialogFormVisible = false
 						if (response.data === true) {
-							that.$_update()
-							Message.success("选题成功")
-
+							that.$message({
+								message: '添加成功',
+								type: 'success',
+								duration: '1000',
+								center: true
+							});
+							that.loading = true
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.loading = false
+								that.$_update()
+							}, 1000);
 						} else {
 							Message.warning("类型重复")
 						}

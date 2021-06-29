@@ -44,10 +44,10 @@
 								<i class="iconfont iconxuanze"></i>
 								编辑
 							</el-button>
-							<el-button type="danger" size="mini" @click="handleDelete(scope.$index, scope.row)">
+							<!-- <el-button type="danger" size="mini" @click="handleDelete(scope.$index, scope.row)">
 								<i class="iconfont iconxuanze"></i>
 								删除
-							</el-button>
+							</el-button> -->
 						</template>
 					</el-table-column>
 
@@ -93,7 +93,7 @@
 		
 		
 		<!-- 选题嵌套表单 -->
-		<el-dialog title="选题" :visible.sync="dialogFormVisible" style="width: 600px;margin-left: 30%;margin-top: 5%;">
+		<el-dialog title="编辑教师信息" :visible.sync="dialogFormVisible" style="width: 600px;margin-left: 30%;margin-top: 5%;">
 			<el-form :model="form">
 				<el-form-item label="姓名">
 					<el-input v-model="form.teacherName" placeholder="学生姓名" style="width: 200px;">

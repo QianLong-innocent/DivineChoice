@@ -38,6 +38,8 @@
 					</el-table-column>
 					<el-table-column prop="professional" label="专业" align="center">
 					</el-table-column>
+					<el-table-column prop="project" label="所选题目" align="center" width="400">
+					</el-table-column>
 					<el-table-column label="操作" width="300" align="center">
 						<template slot-scope="scope">
 							<el-button type="primary" size="mini" @click="clickRowHandle(scope.$index, scope.row)">
@@ -50,7 +52,7 @@
 							</el-button>
 							<el-button type="danger" size="mini" @click="handleDelete(scope.$index, scope.row)">
 								<i class="iconfont iconxuanze"></i>
-								删除
+								退题
 							</el-button>
 						</template>
 					</el-table-column>
@@ -94,7 +96,8 @@
 		</div>
 
 		<!-- 选题嵌套表单 -->
-		<el-dialog title="选题" :visible.sync="dialogFormVisible" style="width: 600px;margin-left: 30%;margin-top: 5%;">
+		<el-dialog title="编辑学生信息" :visible.sync="dialogFormVisible"
+			style="width: 600px;margin-left: 30%;margin-top: 5%;">
 			<el-form :model="form">
 				<el-form-item label="姓名">
 					<el-input v-model="form.studentName" placeholder="学生姓名" style="width: 200px;">
@@ -132,14 +135,14 @@
 				tableData: [],
 				currentPage: 1,
 				form: {
-					studentID:'',
+					studentID: '',
 					studentName: '',
 					password: ''
 				}
 			}
 		},
 		methods: {
-			confirmChoice(){
+			confirmChoice() {
 				this.dialogFormVisible = false
 				this.$confirm('此操作将修改学生基本信息, 是否继续?', '提示', {
 					confirmButtonText: '确定',
@@ -149,14 +152,14 @@
 					// console.log(this.form)
 					let that = this
 					axios.post("http://localhost:8080/api/studentInfos/updateStudentInfo", {
-							student_id:this.form.studentID,
-							password:this.form.password,
-							name:this.form.studentName
+							student_id: this.form.studentID,
+							password: this.form.password,
+							name: this.form.studentName
 						})
 						.then(function(response) {
 							// console.log(that.form)
 							that.dialogFormVisible = false
-					
+
 							that.$message({
 								message: '编辑成功',
 								type: 'success',
@@ -168,12 +171,12 @@
 								that.loading = false
 								that.init()
 							}, 1000);
-					
+
 						})
 						.catch(function(error) {
-					
+
 							that.dialogFormVisible = false
-					
+
 							Message.error(error.response.data)
 						})
 				}).catch(() => {
@@ -182,7 +185,7 @@
 						message: '已取消'
 					});
 				});
-				
+
 			},
 			cancelChoice() {
 				this.dialogFormVisible = false
@@ -198,7 +201,40 @@
 				this.dialogFormVisible = true
 			},
 			handleDelete(index, row) {
-				Message.success("删除成功")
+
+
+				this.$confirm('此操作不可逆, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+
+					let that = this
+					axios.delete("http://localhost:8080/api/leaderInfos/deleteUserChoice", {
+							data: {
+								student_id: row.student_id,
+								professional: row.professional
+							}
+
+						})
+						.then(function(response) {
+
+							// 做一下最后的判断。是否要进行退题
+							that.init1()
+
+						})
+						.catch(function(error) {
+							Message.error(error.response.data)
+						})
+				}).catch(() => {
+					this.$message({
+						type: 'error',
+						message: '已取消'
+					});
+				});
+
+
+
 			},
 			handleCurrentChange(val) {
 				this.currentPage = val;
@@ -222,6 +258,7 @@
 							duration: '1000',
 							center: true
 						});
+
 						that.loading = true
 						that.timer = setTimeout(() => { //设置延迟执行
 							that.loading = false
@@ -263,14 +300,50 @@
 					if (typeof console !== 'undefined') console.error(e);
 				}
 			},
-			init(){
+			init() {
 				let that = this
 				axios.get("http://localhost:8080/api/studentInfos/selectAllStudent")
 					.then(function(response) {
-						that.tableData = response.data
-						Message.success("查询成功")
-						// console.log(that.tableData)
+
+
+						that.$message({
+							message: '查询成功',
+							type: 'success',
+							duration: '1000',
+							center: true
+						});
+						that.loading = true
+						that.timer = setTimeout(() => { //设置延迟执行
+							that.loading = false
+							that.tableData = response.data
+						}, 1000);
 						document.getElementById('paging').style.display = 'block'
+
+					})
+					.catch(function(error) {
+						// console.log(error)
+						Message.error("请检查网络")
+					})
+			},
+			init1() {
+				let that = this
+				axios.get("http://localhost:8080/api/studentInfos/selectAllStudent")
+					.then(function(response) {
+
+
+						that.$message({
+							message: '退题成功',
+							type: 'success',
+							duration: '1000',
+							center: true
+						});
+						that.loading = true
+						that.timer = setTimeout(() => { //设置延迟执行
+							that.loading = false
+							that.tableData = response.data
+						}, 1000);
+						document.getElementById('paging').style.display = 'block'
+
 					})
 					.catch(function(error) {
 						// console.log(error)

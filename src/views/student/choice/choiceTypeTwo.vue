@@ -121,6 +121,7 @@
 							that.loading = false
 							that.searchProjectType()
 						}, 1000);
+						
 
 					})
 					.catch(function(error) {

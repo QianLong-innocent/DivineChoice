@@ -9,36 +9,45 @@
 						<i class="iconfont iconshouye" style="margin-left: 4px;"></i>&emsp;首页
 					</el-menu-item>
 				</router-link>
-				<!-- 功能2 为查询 -->
+				
+				<router-link to="/leader/outline">
+					<el-menu-item index="2">
+						<i class="iconfont iconxiangmu" style="margin-left: 4px;"></i>&emsp;大纲
+					</el-menu-item>
+				</router-link>
+				
+				
+				
+				<!-- 功能3 为查询 -->
 
-				<el-submenu index="2">
+				<el-submenu index="3">
 					<template slot="title"><i class="iconfont iconxiangmuguanli"
 							style="margin-left: 4px;"></i>&emsp;人员管理</template>
 					<router-link to="/leader/registerUser">
-						<el-menu-item index="2-1">&emsp;&emsp;注册用户
+						<el-menu-item index="3-1">&emsp;&emsp;注册用户
 						</el-menu-item>
 					</router-link>
 					<router-link to="/leader/messageStu">
-						<el-menu-item index="2-2">&emsp;&emsp;学生信息
+						<el-menu-item index="3-2">&emsp;&emsp;学生信息
 						</el-menu-item>
 					</router-link>
 					<router-link to="/leader/messageTea">
-						<el-menu-item index="2-3">&emsp;&emsp;教师信息
+						<el-menu-item index="3-3">&emsp;&emsp;教师信息
 						</el-menu-item>
 					</router-link>
 				</el-submenu>
 
 
 
-				<el-submenu index="3">
+				<el-submenu index="4">
 					<template slot="title"><i class="iconfont iconshezhi"
 							style="margin-left: 4px;"></i>&emsp;设置</template>
 					<router-link to="/leader/alterMessage">
-						<el-menu-item index="3-1">&emsp;&emsp;修改个人信息
+						<el-menu-item index="4-1">&emsp;&emsp;修改个人信息
 						</el-menu-item>
 					</router-link>
 					<router-link to="/leader/alterPassword">
-						<el-menu-item index="3-2">&emsp;&emsp;修改密码
+						<el-menu-item index="4-2">&emsp;&emsp;修改密码
 						</el-menu-item>
 					</router-link>
 

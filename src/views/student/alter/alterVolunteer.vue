@@ -66,13 +66,13 @@
 						}
 					})
 					.then(function(response) {
+						that.tablesData = response.data
 						// console.log(response.data.length)
 						if (response.data.length === 0) {
 							Message.success("还未选题")
 
 						} else {
-							that.tablesData = response.data
-
+							
 							if (that.tablesData.length === 1) {
 								that.tablesData[0].index = 1
 							}

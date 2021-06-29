@@ -48,7 +48,7 @@
 		},
 		// 刷新页面，就自动跳转到首页
 		created() {
-			// this.$router.replace('/teacher')
+			// this.$router.replace('/leader')
 		}
 
 

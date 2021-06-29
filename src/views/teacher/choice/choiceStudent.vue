@@ -7,8 +7,8 @@
 				学生专业
 				&emsp;
 				<el-select placeholder="" v-model="professional">
-					<el-option label="计科" value="selectAllTeacherProjectForComputerForChoice"></el-option>
-					<el-option label="软工" value="selectAllTeacherProjectForSoftForChoice"></el-option>
+					<el-option label="计算机科学与技术" value="selectAllTeacherProjectForComputerForChoice"></el-option>
+					<el-option label="软件工程" value="selectAllTeacherProjectForSoftForChoice"></el-option>
 				</el-select>
 				&emsp;
 				<el-button type="primary" @click="searchTeacherProject()">

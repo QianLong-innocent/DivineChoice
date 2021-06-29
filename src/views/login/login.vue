@@ -51,13 +51,15 @@
 	export default {
 		name: "Login",
 		data() {
-
+				
+			
+				
 			var checkID = (rule, value, callback) => {
 
 				if (value === '') {
 					return callback(new Error('学/工号不能为空'));
-				} else if (value.length < 8) {
-					return callback(new Error('学/工号不能低于八位数'));
+				} else if (value.length < 7) {
+					return callback(new Error('学/工号不能低于七位数'));
 				} else if (value.length > 10) {
 					return callback(new Error('学/工号不能高于十位数'))
 				}
@@ -86,6 +88,7 @@
 			};
 
 			return {
+				
 				identifyCodes: '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 				identifyCode: '',
 				form: {
@@ -134,6 +137,7 @@
 			peoplePass(url) {
 				// 开始登录验证
 				let that = this
+				
 				axios.post(url, {
 						username: this.form.username,
 						password: this.form.password
@@ -143,17 +147,44 @@
 						// 解决方法：转换为json格式进行存取
 						// 通过 接口url进入不同的界面
 						if (url.indexOf('student') != -1) {
-							that.$store.commit('$_setUserType', JSON.stringify('/student'))
-							that.$store.commit('$_setToken', JSON.stringify(response.data));
-							that.$router.push('/student')
+							that.$message({
+								message: '登陆成功',
+								type:'success',
+								duration:'1000',
+								center: true
+							});
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.$store.commit('$_setUserType', JSON.stringify('/student'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/student')
+							}, 1000);
+							
 						} else if (url.indexOf('teacher') != -1) {
-							that.$store.commit('$_setUserType', JSON.stringify('/teacher'))
-							that.$store.commit('$_setToken', JSON.stringify(response.data));
-							that.$router.push('/teacher')
+							that.$message({
+								message: '登陆成功',
+								type:'success',
+								duration:'1000',
+								center: true
+							});
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.$store.commit('$_setUserType', JSON.stringify('/teacher'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/teacher')
+							}, 1000);
+							
 						} else if (url.indexOf('leader') != -1) {
-							that.$store.commit('$_setUserType', JSON.stringify('/leader'))
-							that.$store.commit('$_setToken', JSON.stringify(response.data));
-							that.$router.push('/leader')
+							that.$message({
+								message: '登陆成功',
+								type:'success',
+								duration:'1000',
+								center: true
+							});
+							that.timer = setTimeout(() => { //设置延迟执行
+								that.$store.commit('$_setUserType', JSON.stringify('/leader'))
+								that.$store.commit('$_setToken', JSON.stringify(response.data));
+								that.$router.push('/leader')
+							}, 1000);
+							
 						}
 
 					})

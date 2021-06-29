@@ -31,7 +31,7 @@ import AlterPasswordLeader from '../views/leader/alter/alterPassword.vue'
 import RegisterUser from '../views/leader/manager/registerUser.vue'
 import MessageStu from '../views/leader/manager/messageStu.vue'
 import MessageTea from '../views/leader/manager/messageTea.vue'
-
+import Outline from '../views/leader/conclusion/outline.vue'
 
 import Login from '../views/login/login.vue'
 
@@ -236,6 +236,14 @@ const router = new VueRouter({
 				chineseName1: '教师信息'
 			},
 			component: MessageTea
+		},{
+			path: '/leader/outline',
+			name: 'Outline',
+			meta: {
+				chineseName: '总结',
+				chineseName1: '大纲'
+			},
+			component: Outline
 		}]
 	}]
 });

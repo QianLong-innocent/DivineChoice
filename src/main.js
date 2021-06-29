@@ -18,6 +18,9 @@ import store from './store/store.js'
 // 6.后端判断是否有token,有token，就验证token，验证成功就返回数据，验证失败，token过期，或没有就返回401
 // 7.前端如果，拿到401就清除token并跳转到登录页，
 
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 
 // 安装路由
